@@ -82,7 +82,6 @@ class ModelConfig:
     random_state: int = 42
     test_size: float = 0.2
     cv_folds: int = 5
-    selection_split_size: float = 0.5  # مؤقت: تقسيم النوتبوك لاختيار الـ features
 
 @dataclass
 class FeatureConfig:
