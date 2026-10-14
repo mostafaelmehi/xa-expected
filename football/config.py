@@ -84,11 +84,17 @@ class ModelConfig:
     cv_folds: int = 5
     selection_split_size: float = 0.5  # مؤقت: تقسيم النوتبوك لاختيار الـ features
 
+@dataclass
+class FeatureConfig:
+    # Main positions used to build one-hot columns (Main_Pos_DF, ...).
+    main_positions: List[str] = field(default_factory=lambda: ["DF", "MF", "FW"])
 
 @dataclass
 class Config:
     data: DataConfig = field(default_factory=DataConfig)
     model: ModelConfig = field(default_factory=ModelConfig)
+    features: FeatureConfig = field(default_factory=FeatureConfig)
+
 
 
 def load_config() -> Config:
