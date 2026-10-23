@@ -59,3 +59,7 @@ A short description of the project.
 
 --------
 
+# xA prediction
+
+Predicts expected assists (xA) for outfield football players from FBref 2024-25 stats.
+Training logs to MLflow; a FastAPI service serves the `@champion` model.
