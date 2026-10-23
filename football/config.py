@@ -92,6 +92,56 @@ class ModelConfig:
             "max_depth": [None, 10, 20, 30],
         }
     )
+    # Frozen result of football/modeling/discover.py (re-run it if data or cleaning changes).
+    selected_features: list[str] = field(
+        default_factory=lambda: [
+            "KP",
+            "Att 3rd_stats_possession",
+            "PPA",
+            "PassLive",
+            "GCA",
+            "Crs",
+            "PrgR",
+            "Att_stats_possession",
+            "PrgP",
+            "SCA90",
+            "Dis",
+            "Att Pen",
+            "TB",
+            "Min%",
+            "onG",
+            "Touches",
+            "Live_stats_possession",
+            "Min",
+            "PrgDist_stats_possession",
+            "CK",
+            "onxGA",
+            "Live",
+            "npxG",
+            "TI",
+            "unSub",
+            "xG+/-",
+            "G-xG",
+            "Compl",
+            "Sw",
+            "CrdY",
+            "Def",
+            "Sh/90",
+            "PKatt",
+            "PKwon",
+            "PK",
+            "On-Off",
+            "PKcon",
+            "Str",
+        ]
+    )
+    rf_best_params: dict = field(
+        default_factory=lambda: {
+            "max_depth": 20,
+            "max_features": 0.5,
+            "n_estimators": 800,
+        }
+    )
 
 
 @dataclass
