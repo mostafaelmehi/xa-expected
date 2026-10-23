@@ -57,6 +57,9 @@ class DataConfig:
     low_value_columns: list[str] = field(
         default_factory=lambda: ["Mn/Sub", "Mn/Start", "Age", "Born"]
     )
+    # Columns whose name starts with one of these are dropped. 'Rk' is FBref's row
+    # number in each merged table (Rk, Rk_stats_shooting, ...): an index, not a statistic.
+    drop_prefixes: list[str] = field(default_factory=lambda: ["Rk"])
     # Ratio columns that are NaN when the denominator is 0 or when FBref's minimum
     # threshold is not met. NaN is replaced by 0 ("no activity"), not treated as an error.
     zero_fill_columns: list[str] = field(

@@ -79,7 +79,9 @@ class DataPreprocessor:
         # Players with very few minutes have unstable per-90 and ratio statistics.
         before = len(df)
         df = df[df["Min"] >= self.config.min_minutes]
-        logger.info("Removed %d rows (Min < %d)", before - len(df), self.config.min_minutes)
+        logger.info(
+            "Removed %d rows (Min < %d)", before - len(df), self.config.min_minutes
+        )
 
         # Return an independent copy so later steps can modify it
         # without triggering SettingWithCopyWarning.
@@ -120,6 +122,12 @@ class DataPreprocessor:
         )
         present = [col for col in listed if col in df.columns]
         absent = sorted(set(listed) - set(present))
+        # Prefix rule (e.g. every 'Rk*' column), added on top of the explicit lists.
+        present += [
+            col
+            for col in df.columns
+            if col.startswith(tuple(self.config.drop_prefixes)) and col not in present
+        ]
 
         # The notebook used errors='ignore' here; we keep that behaviour
         # but log what was not found so a typo in the config does not go unnoticed.
@@ -141,7 +149,9 @@ class DataPreprocessor:
         before = len(df)
         df = df.dropna(subset=self.config.dropna_columns)
         logger.info(
-            "Removed %d rows with missing %s", before - len(df), self.config.dropna_columns
+            "Removed %d rows with missing %s",
+            before - len(df),
+            self.config.dropna_columns,
         )
 
         logger.info("Remaining missing values: %d", int(df.isna().sum().sum()))
