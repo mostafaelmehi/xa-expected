@@ -43,7 +43,8 @@ def log_to_mlflow(config, model, metrics, features, X_train) -> str:
     mlflow.set_tracking_uri(TRACKING_URI)
     mlflow.set_experiment(EXPERIMENT)
 
-    X_sample = X_train[features].head(5)
+    # All inputs are logged as float64: the API receives JSON numbers, which may be decimals.
+    X_sample = X_train[features].head(5).astype("float64")
 
     with mlflow.start_run():
         mlflow.log_params(config.model.rf_best_params)
