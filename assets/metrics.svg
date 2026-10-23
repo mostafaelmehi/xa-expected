@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 190" width="1200" height="190" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#12261e"/>
+      <stop offset="1" stop-color="#0c1a15"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2ee59d"/>
+      <stop offset="1" stop-color="#5fb4f5"/>
+    </linearGradient>
+  </defs>
+
+  <!-- tile 1: R² gauge -->
+  <g>
+    <rect x="10" y="10" width="280" height="170" rx="16" fill="url(#tile)" stroke="#2ee59d" stroke-opacity="0.3"/>
+    <circle cx="90" cy="95" r="46" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="10"/>
+    <circle cx="90" cy="95" r="46" fill="none" stroke="url(#ring)" stroke-width="10" stroke-linecap="round"
+            stroke-dasharray="289.03" stroke-dashoffset="33.53" transform="rotate(-90 90 95)">
+      <animate attributeName="stroke-dashoffset" values="289.03;33.53;33.53" keyTimes="0;0.3;1" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <text x="90" y="102" font-size="20" font-weight="800" fill="#ffffff" text-anchor="middle">88%</text>
+    <text x="160" y="72" font-size="13" font-weight="700" fill="#7ee8b5" letter-spacing="2">R²</text>
+    <text x="160" y="108" font-size="34" font-weight="800" fill="#ffffff">0.884</text>
+    <text x="160" y="134" font-size="12" fill="#ffffff" fill-opacity="0.55">variance explained</text>
+  </g>
+
+  <!-- tile 2: MAE -->
+  <g>
+    <rect x="306" y="10" width="280" height="170" rx="16" fill="url(#tile)" stroke="#2ee59d" stroke-opacity="0.3"/>
+    <g>
+      <animate attributeName="opacity" values="0;1;1" keyTimes="0;0.15;1" dur="6s" begin="0.3s" repeatCount="indefinite"/>
+      <text x="332" y="56" font-size="13" font-weight="700" fill="#7ee8b5" letter-spacing="2">MAE</text>
+      <text x="332" y="112" font-size="44" font-weight="800" fill="#ffffff">0.384</text>
+      <text x="332" y="144" font-size="12" fill="#ffffff" fill-opacity="0.55">average miss, in xA per season</text>
+    </g>
+  </g>
+
+  <!-- tile 3: RMSE -->
+  <g>
+    <rect x="602" y="10" width="280" height="170" rx="16" fill="url(#tile)" stroke="#2ee59d" stroke-opacity="0.3"/>
+    <g>
+      <animate attributeName="opacity" values="0;1;1" keyTimes="0;0.15;1" dur="6s" begin="0.6s" repeatCount="indefinite"/>
+      <text x="628" y="56" font-size="13" font-weight="700" fill="#7ee8b5" letter-spacing="2">RMSE</text>
+      <text x="628" y="112" font-size="44" font-weight="800" fill="#ffffff">0.553</text>
+      <text x="628" y="144" font-size="12" fill="#ffffff" fill-opacity="0.55">punishes large misses more</text>
+    </g>
+  </g>
+
+  <!-- tile 4: features -->
+  <g>
+    <rect x="898" y="10" width="292" height="170" rx="16" fill="url(#tile)" stroke="#5fb4f5" stroke-opacity="0.35"/>
+    <text x="924" y="56" font-size="13" font-weight="700" fill="#5fb4f5" letter-spacing="2">FEATURES KEPT</text>
+    <text x="924" y="108" font-size="44" font-weight="800" fill="#ffffff">38<tspan font-size="22" fill-opacity="0.5"> / 104</tspan></text>
+    <rect x="924" y="128" width="240" height="8" rx="4" fill="#ffffff" fill-opacity="0.08"/>
+    <rect x="924" y="128" width="88" height="8" rx="4" fill="#5fb4f5">
+      <animate attributeName="width" values="0;88;88" keyTimes="0;0.3;1" dur="6s" repeatCount="indefinite"/>
+    </rect>
+    <text x="924" y="160" font-size="12" fill="#ffffff" fill-opacity="0.55">407 test players · 20% hold-out</text>
+  </g>
+</svg>

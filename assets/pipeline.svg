@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 340" width="1200" height="340" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a1612"/>
+      <stop offset="1" stop-color="#0b1b26"/>
+    </linearGradient>
+    <linearGradient id="box" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#13271f"/>
+      <stop offset="1" stop-color="#0f1f1a"/>
+    </linearGradient>
+    <linearGradient id="boxd" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#11233a"/>
+      <stop offset="1" stop-color="#0d1b2c"/>
+    </linearGradient>
+    <clipPath id="card"><rect width="1200" height="340" rx="18"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#card)">
+    <rect width="1200" height="340" fill="url(#bg)"/>
+
+    <!-- zones -->
+    <rect x="22" y="56" width="668" height="236" rx="14" fill="none" stroke="#7ee8b5" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="6 6"/>
+    <text x="42" y="44" font-size="13" font-weight="700" fill="#7ee8b5" letter-spacing="3">ON YOUR MACHINE</text>
+    <rect x="722" y="56" width="456" height="236" rx="14" fill="none" stroke="#2496ed" stroke-opacity="0.6" stroke-width="1.5" stroke-dasharray="6 6"/>
+    <text x="742" y="44" font-size="13" font-weight="700" fill="#5fb4f5" letter-spacing="3">IN DOCKER  ·  docker compose up</text>
+
+    <!-- connectors (data flows left to right) -->
+    <g fill="none" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 8">
+      <path id="c1" d="M222 174 H 263" stroke="#7ee8b5"/>
+      <path id="c2" d="M447 174 H 488" stroke="#7ee8b5"/>
+      <path id="c3" d="M672 174 H 743" stroke="#9ad7f7"/>
+      <path id="c4" d="M927 174 H 978" stroke="#5fb4f5"/>
+      <animate attributeName="stroke-dashoffset" values="0;-24" dur="0.8s" repeatCount="indefinite"/>
+    </g>
+    <g font-size="12" fill-opacity="0.75">
+      <text x="510" y="264" fill="#9ad7f7">→ logs + registers the model</text>
+      <text x="765" y="264" fill="#5fb4f5">→ API loads @champion</text>
+    </g>
+
+    <!-- packets -->
+    <g fill="#ffffff">
+      <circle r="5"><animateMotion dur="5s" begin="0.6s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.12;1" calcMode="linear"><mpath xlink:href="#c1" href="#c1"/></animateMotion></circle>
+      <circle r="5"><animateMotion dur="5s" begin="1.6s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.12;1" calcMode="linear"><mpath xlink:href="#c2" href="#c2"/></animateMotion></circle>
+      <circle r="5"><animateMotion dur="5s" begin="2.6s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.12;1" calcMode="linear"><mpath xlink:href="#c3" href="#c3"/></animateMotion></circle>
+      <circle r="5"><animateMotion dur="5s" begin="3.6s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.12;1" calcMode="linear"><mpath xlink:href="#c4" href="#c4"/></animateMotion></circle>
+    </g>
+
+    <!-- boxes: each one lights up in turn -->
+    <g>
+      <rect x="42" y="114" width="180" height="120" rx="12" fill="url(#box)" stroke="#7ee8b5" stroke-width="2">
+        <animate attributeName="stroke-opacity" values="0.25;1;0.25;0.25" keyTimes="0;0.06;0.2;1" dur="5s" begin="0s" repeatCount="indefinite"/>
+      </rect>
+      <text x="62" y="146" font-size="12" font-weight="700" fill="#7ee8b5" letter-spacing="2">01 · DATA</text>
+      <text x="62" y="180" font-size="19" font-weight="700" fill="#ffffff">Kaggle</text>
+      <text x="62" y="206" font-size="13" fill="#ffffff" fill-opacity="0.6">FBref 2024-25</text>
+      <text x="62" y="224" font-size="13" fill="#ffffff" fill-opacity="0.6">2,854 players</text>
+    </g>
+    <g>
+      <rect x="265" y="114" width="180" height="120" rx="12" fill="url(#box)" stroke="#7ee8b5" stroke-width="2">
+        <animate attributeName="stroke-opacity" values="0.25;1;0.25;0.25" keyTimes="0;0.06;0.2;1" dur="5s" begin="1s" repeatCount="indefinite"/>
+      </rect>
+      <text x="285" y="146" font-size="12" font-weight="700" fill="#7ee8b5" letter-spacing="2">02 · CLEAN</text>
+      <text x="285" y="180" font-size="19" font-weight="700" fill="#ffffff">Clean + split</text>
+      <text x="285" y="206" font-size="13" fill="#ffffff" fill-opacity="0.6">2,034 outfield players</text>
+      <text x="285" y="224" font-size="13" fill="#ffffff" fill-opacity="0.6">80 / 20 split first</text>
+    </g>
+    <g>
+      <rect x="490" y="114" width="180" height="120" rx="12" fill="url(#box)" stroke="#7ee8b5" stroke-width="2">
+        <animate attributeName="stroke-opacity" values="0.25;1;0.25;0.25" keyTimes="0;0.06;0.2;1" dur="5s" begin="2s" repeatCount="indefinite"/>
+      </rect>
+      <text x="510" y="146" font-size="12" font-weight="700" fill="#7ee8b5" letter-spacing="2">03 · TRAIN</text>
+      <text x="510" y="180" font-size="19" font-weight="700" fill="#ffffff">Random Forest</text>
+      <text x="510" y="206" font-size="13" fill="#ffffff" fill-opacity="0.6">38 frozen features</text>
+      <text x="510" y="224" font-size="13" fill="#ffffff" fill-opacity="0.6">test R² 0.884</text>
+    </g>
+    <g>
+      <rect x="745" y="114" width="180" height="120" rx="12" fill="url(#boxd)" stroke="#5fb4f5" stroke-width="2">
+        <animate attributeName="stroke-opacity" values="0.25;1;0.25;0.25" keyTimes="0;0.06;0.2;1" dur="5s" begin="3s" repeatCount="indefinite"/>
+      </rect>
+      <text x="765" y="146" font-size="12" font-weight="700" fill="#5fb4f5" letter-spacing="2">04 · REGISTRY</text>
+      <text x="765" y="180" font-size="19" font-weight="700" fill="#ffffff">MLflow</text>
+      <text x="765" y="206" font-size="13" fill="#ffffff" fill-opacity="0.6">runs · metrics · models</text>
+      <text x="765" y="224" font-size="13" fill="#ffffff" fill-opacity="0.6">xa_model@champion</text>
+    </g>
+    <g>
+      <rect x="980" y="114" width="180" height="120" rx="12" fill="url(#boxd)" stroke="#5fb4f5" stroke-width="2">
+        <animate attributeName="stroke-opacity" values="0.25;1;0.25;0.25" keyTimes="0;0.06;0.2;1" dur="5s" begin="4s" repeatCount="indefinite"/>
+      </rect>
+      <text x="1000" y="146" font-size="12" font-weight="700" fill="#5fb4f5" letter-spacing="2">05 · SERVE</text>
+      <text x="1000" y="180" font-size="19" font-weight="700" fill="#ffffff">FastAPI</text>
+      <text x="1000" y="206" font-size="13" fill="#ffffff" fill-opacity="0.6">POST /predict</text>
+      <circle cx="1006" cy="220" r="5" fill="#2ee59d">
+        <animate attributeName="fill-opacity" values="1;0.2;1" dur="1.4s" repeatCount="indefinite"/>
+      </circle>
+      <text x="1018" y="224" font-size="13" fill="#2ee59d">live on :8000</text>
+    </g>
+
+    <text x="600" y="322" font-size="13" fill="#ffffff" fill-opacity="0.45" text-anchor="middle">a new version is promoted to @champion only if its test R² is not worse than the current one</text>
+  </g>
+</svg>
