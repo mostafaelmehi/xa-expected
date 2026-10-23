@@ -4,6 +4,7 @@ import logging
 import os
 
 import mlflow
+from mlflow.exceptions import MlflowException
 from mlflow.models import infer_signature
 from mlflow.tracking import MlflowClient
 from sklearn.ensemble import RandomForestRegressor
@@ -66,12 +67,47 @@ def log_to_mlflow(config, model, metrics, features, X_train) -> str:
     return version
 
 
+def promote_if_better(version: str, metrics: dict) -> bool:
+    """Make this version @champion if it is at least as good as the current champion."""
+    client = MlflowClient()
+
+    try:
+        current = client.get_model_version_by_alias(MODEL_NAME, "champion")
+    except MlflowException:
+        # No champion yet: the first registered model takes the role.
+        client.set_registered_model_alias(MODEL_NAME, "champion", version)
+        logger.info("No champion yet: version %s is now @champion", version)
+        return True
+
+    current_r2 = client.get_run(current.run_id).data.metrics["test_r2"]
+    if metrics["r2"] >= current_r2:
+        client.set_registered_model_alias(MODEL_NAME, "champion", version)
+        logger.info(
+            "Version %s (R2 %.4f) replaces champion (R2 %.4f)",
+            version,
+            metrics["r2"],
+            current_r2,
+        )
+        return True
+
+    logger.info(
+        "Version %s (R2 %.4f) is worse than champion (R2 %.4f): not promoted",
+        version,
+        metrics["r2"],
+        current_r2,
+    )
+    return False
+
+
 def main():
     config, model, metrics, features, X_train = train_final()
     print(f"\nTrained on {len(features)} features | test = {metrics}")
 
     version = log_to_mlflow(config, model, metrics, features, X_train)
     print(f"Registered {MODEL_NAME} version {version} with alias @challenger")
+
+    promoted = promote_if_better(version, metrics)
+    print(f"Promoted to @champion: {promoted}")
 
 
 if __name__ == "__main__":
