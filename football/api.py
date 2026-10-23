@@ -49,13 +49,18 @@ class PredictResponse(BaseModel):
     model_version: str
 
 
+def load_champion():
+    """Return (model, version) for the registry alias. Kept separate so tests can replace it."""
+    mlflow.set_tracking_uri(TRACKING_URI)
+    version = MlflowClient().get_model_version_by_alias(MODEL_NAME, MODEL_ALIAS).version
+    model = mlflow.pyfunc.load_model(f"models:/{MODEL_NAME}@{MODEL_ALIAS}")
+    return model, version
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Load the model once at startup, not on every request."""
-    mlflow.set_tracking_uri(TRACKING_URI)
-
-    version = MlflowClient().get_model_version_by_alias(MODEL_NAME, MODEL_ALIAS).version
-    model = mlflow.pyfunc.load_model(f"models:/{MODEL_NAME}@{MODEL_ALIAS}")
+    model, version = load_champion()
 
     # Refuse to start if the API schema and the loaded model disagree.
     model_columns = model.metadata.get_input_schema().input_names()
