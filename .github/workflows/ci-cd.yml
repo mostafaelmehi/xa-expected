@@ -1,0 +1,62 @@
+# CI/CD pipeline: lint and test every change; later phases add the Docker image.
+name: CI/CD
+
+# When the workflow runs: pushes to main, pull requests targeting main,
+# and manually from the Actions tab ("Run workflow" button).
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# One run per branch at a time: a new push cancels the older, still-running run.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Default token permissions: read-only access to the repository code.
+permissions:
+  contents: read
+
+jobs:
+  # Style checks: flake8 (errors), black (formatting), isort (import order).
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      # Download the repository code onto the runner.
+      - uses: actions/checkout@v7
+
+      # Install uv and cache downloaded packages between runs (keyed on uv.lock).
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      # Install the exact versions from uv.lock (fails if the lock is out of date).
+      - name: Install dependencies
+        run: uv sync --frozen --python 3.10
+
+      - name: flake8
+        run: uv run flake8 football tests
+
+      - name: black
+        run: uv run black --check football tests
+
+      - name: isort
+        run: uv run isort --check-only football tests
+
+  # Unit tests. The API tests use a fake model, so no MLflow server or dataset is needed.
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --frozen --python 3.10
+
+      - name: pytest
+        run: uv run pytest -q
