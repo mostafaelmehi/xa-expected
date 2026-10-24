@@ -11,9 +11,9 @@ def make_positions() -> pd.DataFrame:
 def test_position_features_adds_haybird_and_main_pos():
     out = PositionFeatures().transform(make_positions())
 
-    assert "Pos" not in out.columns                       # original column dropped
-    assert out["haybird"].tolist() == [0, 1, 0]           # comma means hybrid
-    assert out["Main_Pos_MF"].tolist() == [0, 1, 1]       # first listed position wins
+    assert "Pos" not in out.columns  # original column dropped
+    assert out["haybird"].tolist() == [0, 1, 0]  # comma means hybrid
+    assert out["Main_Pos_MF"].tolist() == [0, 1, 1]  # first listed position wins
     assert out["Main_Pos_DF"].tolist() == [1, 0, 0]
 
 
@@ -28,4 +28,4 @@ def test_position_features_does_not_change_input():
     df = make_positions()
     PositionFeatures().transform(df)
 
-    assert "Pos" in df.columns                            # the input stays untouched
+    assert "Pos" in df.columns  # the input stays untouched

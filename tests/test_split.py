@@ -6,9 +6,7 @@ from football.modeling.split import DataSplitter
 
 def make_data(n: int = 100) -> pd.DataFrame:
     """Fake data with a target column and two features."""
-    return pd.DataFrame(
-        {"xA": range(n), "KP": range(n, 2 * n), "Sh": range(2 * n, 3 * n)}
-    )
+    return pd.DataFrame({"xA": range(n), "KP": range(n, 2 * n), "Sh": range(2 * n, 3 * n)})
 
 
 def test_split_removes_target_from_features():

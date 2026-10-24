@@ -79,9 +79,7 @@ class DataPreprocessor:
         # Players with very few minutes have unstable per-90 and ratio statistics.
         before = len(df)
         df = df[df["Min"] >= self.config.min_minutes]
-        logger.info(
-            "Removed %d rows (Min < %d)", before - len(df), self.config.min_minutes
-        )
+        logger.info("Removed %d rows (Min < %d)", before - len(df), self.config.min_minutes)
 
         # Return an independent copy so later steps can modify it
         # without triggering SettingWithCopyWarning.

@@ -30,21 +30,13 @@ def main():
     metrics = ModelEvaluator().evaluate(grid, X_test[features], y_test)
 
     print("\n" + "=" * 60)
-    print(
-        f"{len(features)} features | CV R2 = {grid.best_score_:.4f} | test = {metrics}"
-    )
+    print(f"{len(features)} features | CV R2 = {grid.best_score_:.4f} | test = {metrics}")
     print("=" * 60)
     print("Copy this into ModelConfig in football/config.py:\n")
-    print(
-        f"    selected_features: list[str] = field(default_factory=lambda: {features!r})"
-    )
-    print(
-        f"    rf_best_params: dict = field(default_factory=lambda: {grid.best_params_!r})"
-    )
+    print(f"    selected_features: list[str] = field(default_factory=lambda: {features!r})")
+    print(f"    rf_best_params: dict = field(default_factory=lambda: {grid.best_params_!r})")
 
 
 if __name__ == "__main__":
-    logging.basicConfig(
-        level=logging.INFO, format="%(levelname)s %(name)s: %(message)s"
-    )
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
     main()

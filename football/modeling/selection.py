@@ -1,8 +1,8 @@
 import logging
 
+from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 import numpy as np
 import pandas as pd
-from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.feature_selection import mutual_info_regression
 from sklearn.linear_model import LinearRegression

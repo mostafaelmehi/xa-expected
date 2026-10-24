@@ -4,14 +4,14 @@ Run from the project root:
     uv run uvicorn football.api:app --port 8000
 """
 
+from contextlib import asynccontextmanager
 import logging
 import os
-from contextlib import asynccontextmanager
 
-import mlflow
-import pandas as pd
 from fastapi import FastAPI, Request
+import mlflow
 from mlflow.tracking import MlflowClient
+import pandas as pd
 from pydantic import BaseModel, ConfigDict, Field, create_model
 
 from football.config import load_config
@@ -74,9 +74,7 @@ async def lifespan(app: FastAPI):
     app.state.model = model
     app.state.version = version
     app.state.columns = model_columns
-    logger.info(
-        "Loaded %s version %s (%d features)", MODEL_NAME, version, len(model_columns)
-    )
+    logger.info("Loaded %s version %s (%d features)", MODEL_NAME, version, len(model_columns))
     yield
 
 

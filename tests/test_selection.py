@@ -7,9 +7,7 @@ from football.modeling.selection import FeatureSelector
 def make_data(n: int = 120):
     """Target depends only on 'a' and 'b'; the other columns are pure noise."""
     rng = np.random.default_rng(0)
-    X = pd.DataFrame(
-        rng.normal(size=(n, 5)), columns=["a", "b", "noise1", "noise2", "noise3"]
-    )
+    X = pd.DataFrame(rng.normal(size=(n, 5)), columns=["a", "b", "noise1", "noise2", "noise3"])
     y = 3 * X["a"] + 2 * X["b"] + rng.normal(scale=0.1, size=n)
     return X, y
 
