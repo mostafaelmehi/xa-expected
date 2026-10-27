@@ -60,3 +60,53 @@ jobs:
 
       - name: pytest
         run: uv run pytest -q
+
+  # Build the API image and check it starts Python correctly; publish it on pushes to main.
+  docker:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    # Job-level permissions replace the workflow defaults, so contents: read is repeated.
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v7
+
+      # Buildx is Docker's modern builder; needed for the GitHub Actions layer cache.
+      - uses: docker/setup-buildx-action@v4
+
+      # Build the image and load it into the runner's local Docker (no push yet).
+      # Layers are cached in GitHub Actions, so unchanged layers are not rebuilt.
+      - name: Build image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          load: true
+          tags: xa-api:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # Smoke test: the full API cannot start here (it needs a @champion model in MLflow),
+      # so only check that the code and its main dependencies import inside the image.
+      - name: Smoke test
+        run: docker run --rm xa-api:ci python -c "import football.api, uvicorn; print('image OK')"
+
+      # Everything below runs only on a push to main, never on pull requests.
+      - name: Log in to GitHub Container Registry
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Image names on ghcr.io must be lowercase; tag with "latest" and the short commit sha.
+      - name: Push image
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          IMAGE="ghcr.io/${GITHUB_REPOSITORY,,}"
+          SHORT_SHA="${GITHUB_SHA::7}"
+          for TAG in latest "$SHORT_SHA"; do
+            docker tag xa-api:ci "$IMAGE:$TAG"
+            docker push "$IMAGE:$TAG"
+          done

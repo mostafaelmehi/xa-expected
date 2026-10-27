@@ -1,7 +1,7 @@
 FROM python:3.10-slim
 
 # uv installs the exact versions pinned in uv.lock (same as the model was trained with).
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
+COPY --from=ghcr.io/astral-sh/uv:0.12.23 /uv /bin/uv
 
 WORKDIR /app
 
